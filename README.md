@@ -5,7 +5,7 @@
 3. The database will handle the relationships and entities that are involved in managing a professional sports league like IPL.
 
 ### Solution Constituents
-Solution inclues.
+Solution includes
 1. Entity Identification
 2. Relationships Among Entities
 3. Attributes and Constraints
