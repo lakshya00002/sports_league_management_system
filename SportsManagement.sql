@@ -2,7 +2,6 @@ CREATE DATABASE SPORTS_LEAGUE;
 
 USE SPORTS_LEAGUE;
 
-
 CREATE TABLE Stadium (
 	Stadium_ID INT PRIMARY KEY AUTO_INCREMENT,
 	Stadium_Name VARCHAR(60) NOT NULL,
@@ -30,7 +29,7 @@ CREATE TABLE Team (
     Coach_ID INT,
     Team_Founding_Year DATE,
     Total_Titles_Won INT DEFAULT 0 CHECK (Total_Titles_Won >= 0),
-    Team_Logo BLOB, 
+    Team_Logo BLOB, -- Consider moving this to a file server for better performance
     Team_Dress_Colour VARCHAR(20),
     Team_Website_Link VARCHAR(50),
     Team_Net_Worth DECIMAL(15, 2) CHECK (Team_Net_Worth >= 0),
@@ -45,7 +44,7 @@ CREATE TABLE Player (
 	Last_Name VARCHAR(50) NOT NULL,
 	Date_Of_Birth DATE , 
 	Nationality VARCHAR(55),
-	Role ENUM('Batsman', 'Bowler', 'All-rounder', 'Wicketkeeper') NOT NULL,
+	Role ENUM('Batsman', 'Bowler', 'All-rounder', 'Wicketkeeper') NOT NULL, -- ENUM for consistency
 	Batting_Style ENUM('Right_handed', 'Left_handed') NOT NULL,
 	Bowling_Style ENUM('Right_arm Fast', 'Left_arm Fast', 'Left_arm Spin', 'Right_arm Spin') NULL,
 	Total_Runs_Scored INT DEFAULT 0 CHECK (Total_Runs_Scored >= 0),
@@ -56,7 +55,7 @@ CREATE TABLE Player (
 	Total_Centuries INT DEFAULT 0 CHECK (Total_Centuries >= 0),
 	Base_Price INT CHECK (Base_Price >= 0),
 	Current_Team_ID INT,
-	IPL_Debut_Year DATE CHECK (IPL_Debut_Year >= '2008-01-01'), 
+	IPL_Debut_Year DATE CHECK (IPL_Debut_Year >= '2008-01-01'), -- IPL started in 2008
 	International_Career_Start DATE,
 	Total_IPL_Trophies_Won INT DEFAULT 0 CHECK (Total_IPL_Trophies_Won >= 0),
 	FOREIGN KEY (Current_Team_ID) REFERENCES Team (Team_ID) ON UPDATE CASCADE
@@ -96,7 +95,7 @@ CREATE TABLE Contract (
 
 CREATE TABLE Season (
 	Season_ID INT PRIMARY KEY AUTO_INCREMENT,
-	Year YEAR CHECK (Year >= 2008),
+	Year YEAR CHECK (Year >= 2008), -- IPL started in 2008
 	Total_Matches_Played INT DEFAULT 0 CHECK (Total_Matches_Played >= 0),
 	Winning_Team_ID INT,
 	Runner_Team_ID INT,
@@ -113,7 +112,7 @@ CREATE TABLE Matches (
 	Season_ID INT,
 	Team1_ID INT,
 	Team2_ID INT,
-	Match_Date DATETIME CHECK (Match_Date >= '2008-01-01'),
+	Match_Date DATETIME CHECK (Match_Date >= '2008-01-01'), -- IPL started in 2008
 	Umpire1_ID INT,
 	Umpire2_ID INT,
 	Match_Result VARCHAR(200),
@@ -172,7 +171,8 @@ CREATE TABLE Ball (
 	Is_NoBall BOOLEAN DEFAULT FALSE,
 	Is_Wide BOOLEAN DEFAULT FALSE,
 	Is_LegBye BOOLEAN DEFAULT FALSE,
-	Ball_Number INT CHECK (Ball_Number BETWEEN 1 AND 6),
+    Ball_Over INT CHECK (Ball_Over BETWEEN 1 AND 20),
+	Ball_Number INT CHECK (Ball_Number BETWEEN 1 AND 6), -- Each over has 6 balls max
 	FOREIGN KEY (Inning_ID) REFERENCES Inning (Innings_ID),
 	FOREIGN KEY (Bowler_ID) REFERENCES Player (Player_ID),
 	FOREIGN KEY (Batsman_ID) REFERENCES Player (Player_ID),
@@ -221,6 +221,8 @@ VALUES
 ('Jasprit', 'Bumrah', '1993-12-06', 'India', 'Bowler', 'Right_handed', 'Right_arm Fast', 100, 180, 50, 90, 0, 0, 10000000, 1, '2013-01-01', '2016-01-23', 3),
 ('Hardik', 'Pandya', '1993-10-11', 'India', 'All-rounder', 'Right_handed', 'Right_arm Fast', 2500, 75, 40, 110, 10, 1, 12000000, 5, '2015-01-01', '2016-01-26', 1);
 
+
+
 INSERT INTO Umpire (First_Name, Last_Name, Nationality, Total_Matches, Date_Of_Birth, Umpire_Rating)
 VALUES 
 ('Nitin', 'Menon', 'India', 75, '1983-11-12', 9),
@@ -244,6 +246,10 @@ VALUES
 (3, '2018-01-01', '2023-01-01', 12000000.00, 2),
 (4, '2021-01-01', '2025-01-01', 10000000.00, 1),
 (5, '2021-01-01', '2026-01-01', 12000000.00, 5);
+
+INSERT INTO Contract (Player_ID, Contract_Start_Year, Contract_End_Year, Amount, Team_ID)
+VALUES 
+(3, '2016-01-01', '2018-01-01', 10000000.00, 5);
 
 INSERT INTO Season (Year, Total_Matches_Played, Winning_Team_ID, Runner_Team_ID, Orange_Cap_Winner_ID, Purple_Cap_Winner_ID)
 VALUES 
@@ -278,13 +284,13 @@ VALUES
 (4, 1, 12, 120, 20, 8, 10, 5, NULL, 6.80, 18.50, NULL),
 (5, 1, 15, 300, 10, 7, 25, 10, 140.00, 7.50, 20.00, 30.00);
 
-INSERT INTO Ball (Inning_ID, Bowler_ID, Batsman_ID, Non_striker_ID, Run_Scored, Is_Wicket, Is_NoBall, Is_Wide, Is_LegBye, Ball_Number)
+INSERT INTO Ball (Inning_ID, Bowler_ID, Batsman_ID, Non_striker_ID, Run_Scored, Is_Wicket, Is_NoBall, Is_Wide, Is_LegBye, Ball_Over,Ball_Number)
 VALUES 
-(1, 4, 1, 3, 1, FALSE, FALSE, FALSE, FALSE, 1),
-(1, 4, 2, 3, 0, TRUE, FALSE, FALSE, FALSE, 2),
-(2, 5, 3, 2, 6, FALSE, FALSE, FALSE, FALSE, 1),
-(2, 5, 1, 4, 1, FALSE, FALSE, FALSE, FALSE, 2),
-(2, 4, 3, 2, 0, TRUE, FALSE, FALSE, FALSE, 3);
+(1, 4, 1, 3, 1, FALSE, FALSE, FALSE, FALSE,1, 1),
+(1, 4, 2, 3, 0, TRUE, FALSE, FALSE, FALSE, 1, 2),
+(2, 5, 3, 2, 6, FALSE, FALSE, FALSE, FALSE, 2, 1),
+(2, 5, 1, 4, 1, FALSE, FALSE, FALSE, FALSE, 5, 2),
+(2, 4, 3, 2, 0, TRUE, FALSE, FALSE, FALSE, 20, 3);
 
 INSERT INTO TeamCaptain (Team_ID, Player_ID, Start_Date, End_Date)
 VALUES 
@@ -293,6 +299,29 @@ VALUES
 (3, 1, '2013-01-01', NULL),
 (5, 5, '2021-01-01', NULL),
 (4, 1, '2020-01-01', NULL);
+
+
+INSERT INTO Player (
+    First_Name, Last_Name, Date_Of_Birth, Nationality, Role, Batting_Style, Bowling_Style, 
+    Total_Runs_Scored, Total_Wickets_Taken, Total_Catches_Taken, Total_Matches_Played, 
+    Total_Half_Centuries, Total_Centuries, Base_Price, Current_Team_ID, IPL_Debut_Year, 
+    International_Career_Start, Total_IPL_Trophies_Won) 
+VALUES
+('Faf', 'du Plessis', '1984-07-13', 'South African', 'Batsman', 'Right_handed', NULL, 3768, 0, 85, 127, 25, 0, 7000000, 3, '2011-04-18', '2011-01-18', 0),
+('Glenn', 'Maxwell', '1988-10-14', 'Australian', 'All-rounder', 'Right_handed', 'Right_arm Spin', 2495, 39, 55, 120, 12, 0, 11000000, 3, '2012-04-18', '2012-08-18', 0),
+('Mohammed', 'Siraj', '1994-03-13', 'Indian', 'Bowler', 'Right_handed', 'Right_arm Fast', 29, 70, 20, 76, 0, 0, 5000000, 3, '2017-04-18', '2020-01-15', 0),
+('Harshal', 'Patel', '1990-11-23', 'Indian', 'Bowler', 'Right_handed', 'Right_arm Fast', 79, 97, 28, 94, 0, 0, 10000000, 3, '2012-05-11', '2021-09-18', 0),
+('Wanindu', 'Hasaranga', '1997-07-29', 'Sri Lankan', 'All-rounder', 'Right_handed', 'Right_arm Spin', 153, 26, 5, 14, 0, 0, 10750000, 3, '2021-08-20', '2021-01-15', 0),
+('Dinesh', 'Karthik', '1985-06-01', 'Indian', 'Wicketkeeper', 'Right_handed', NULL, 4376, 0, 95, 229, 20, 0, 5500000, 3, '2008-04-18', '2004-09-04', 0),
+('Josh', 'Hazlewood', '1991-01-08', 'Australian', 'Bowler', 'Left_handed', 'Right_arm Fast', 27, 38, 5, 27, 0, 0, 7500000, 3, '2021-04-18', '2013-06-11', 0),
+('Shahbaz', 'Ahmed', '1994-12-12', 'Indian', 'All-rounder', 'Left_handed', 'Left_arm Spin', 210, 13, 15, 31, 0, 0, 2400000, 3, '2020-10-12', '2020-01-10', 0),
+('David', 'Willey', '1990-02-28', 'English', 'All-rounder', 'Left_handed', 'Left_arm Fast', 155, 13, 12, 6, 0, 0, 2000000, 3, '2022-04-18', '2015-05-11', 0),
+('Anuj', 'Rawat', '1999-10-17', 'Indian', 'Wicketkeeper', 'Left_handed', NULL,359, 0, 7, 21, 0, 0, 3400000, 3, '2022-04-18', '2022-01-10', 0);
+
+
+
+
+
 
 
 -- Queries
@@ -330,7 +359,7 @@ SELECT
     P.Bowling_Style 
 FROM Player P
 JOIN Team T ON P.Current_Team_ID = T.Team_ID
-WHERE T.Team_Name = 'Chennai Super Kings';
+WHERE T.Team_name = 'Royal Challengers Bangalore';
 
 -- Get the Coach and Home Stadium of a Team
 SELECT 
@@ -341,8 +370,8 @@ SELECT
     S.Capacity AS Stadium_Capacity 
 FROM Team T
 JOIN Coach C ON T.Coach_ID = C.Coach_ID
-JOIN Stadium S ON T.Home_Stadium_ID = S.Stadium_ID
-WHERE T.Team_Name = 'Mumbai Indians';
+JOIN Stadium S ON T.Home_Stadium_ID = S.Stadium_ID;
+-- WHERE T.Team_Name = 'Mumbai Indians';
 
 -- Get Match Details of a Particular Season
 SELECT 
@@ -382,11 +411,11 @@ ORDER BY U.Umpire_Rating DESC;
 -- Get Winning and Runner-up Teams for Each Season
 SELECT 
     Se.Year, 
-    WT.Team_Name AS Winning_Team, 
-    RT.Team_Name AS Runner_Up_Team 
+    T1.Team_Name AS Winning_Team, 
+    T2.Team_Name AS Runner_Up_Team 
 FROM Season Se
-JOIN Team WT ON Se.Winning_Team_ID = WT.Team_ID
-JOIN Team RT ON Se.Runner_Team_ID = RT.Team_ID;
+JOIN Team T1 ON Se.Winning_Team_ID = T1.Team_ID
+JOIN Team T2 ON Se.Runner_Team_ID = T2.Team_ID;
 
 -- Get Total Matches Played by Each Team in a Season
 SELECT 
@@ -397,6 +426,147 @@ JOIN Team T ON (M.Team1_ID = T.Team_ID OR M.Team2_ID = T.Team_ID)
 JOIN Season S ON M.Season_ID = S.Season_ID
 WHERE S.Year = 2022
 GROUP BY T.Team_Name;
+
+-- Getting orange cap winner of each season
+SELECT
+	S.Year,
+	CONCAT(P.First_Name, ' ', P.Last_Name) AS Full_Name
+FROM Season S
+JOIN PLAYER P ON P.Player_ID = S.Orange_Cap_Winner_ID;    
+
+-- Getting purple cap winner of each season
+SELECT
+	S.Year,
+	CONCAT(P.First_Name, ' ', P.Last_Name) AS Full_Name
+FROM Season S
+JOIN PLAYER P ON P.Player_ID = S.Purple_Cap_Winner_ID;
+
+-- Getting detail of each Ball of a Match
+SELECT 
+	CONCAT(Ba.Ball_over, '.', Ba.Ball_Number) AS BALL,
+    CONCAT(P1.First_Name, ' ', P1.Last_Name) AS Bowler,
+    CONCAT(P2.First_Name, ' ', P2.Last_Name) AS Batsman,
+    Ba.Run_Scored, 
+    Ba.Is_Wicket, 
+    Ba.Is_NoBall, 
+    Ba.Is_Wide, 
+    Ba.Is_LegBye
+FROM BALL Ba
+JOIN PLAYER P1 ON P1.Player_ID = Ba.Bowler_ID
+JOIN PLAYER P2 ON P2.Player_ID = Ba.Batsman_ID
+JOIN Inning I ON I.Innings_ID = Ba.Inning_ID
+JOIN Matches M ON M.Match_ID = I.Match_ID
+WHERE I.Innings_ID = 1 AND M.Match_ID = 1;  
+
+-- get the total runs scored by each team across all matches
+SELECT T.Team_Name, SUM(Total_Runs) AS Total_Runs
+FROM Team T
+JOIN Inning I on I.Team_Batting_ID = T.Team_ID
+GROUP BY I.Team_Batting_ID;
+
+-- Count how many matches each umpire has officiated
+SELECT Umpire1_ID, COUNT(Match_ID) AS Matches_Officiated
+FROM Matches
+GROUP BY Umpire1_ID;
+
+-- Total wickets taken by each player across all seasons
+SELECT 
+	CONCAT(P.First_Name, ' ', P.Last_Name) AS Full_Name,
+    SUM(Wickets_Taken) AS Total_Wickets
+FROM Statistics S
+JOIN PLAYER P ON P.Player_ID = S.Player_ID
+GROUP BY S.Player_ID;
+
+-- Find the number of matches each team has played in a season
+SELECT Season_ID, Team1_ID, COUNT(Match_ID) AS Matches_Played
+FROM Matches
+GROUP BY Season_ID, Team1_ID;
+
+-- the average runs scored by each player across all seasons
+SELECT 
+	CONCAT(P.First_Name, ' ', P.Last_Name) AS Full_Name,
+    AVG(Runs_Scored) AS Average_Runs
+FROM Statistics S 
+JOIN PLAYER P ON P.Player_ID = S.Player_ID
+GROUP BY S.Player_ID;
+
+-- Get batting average of all player
+SELECT 
+    CONCAT(P.First_Name, ' ', P.Last_Name) AS Full_Name,
+    S.Batting_Average
+FROM Statistics S    
+JOIN PLAYER P ON P.Player_ID = S.Player_ID; 
+
+-- Total matches hosted by each stadium
+SELECT S.Stadium_Name, COUNT(Match_ID) AS Total_Matches
+FROM Matches M 
+JOIN Stadium S ON S.Stadium_ID = M.Stadium_ID
+GROUP BY M.Stadium_ID;
+   
+-- Get the player with the highest strike rate in a particular season
+SELECT Player_ID, Strike_Rate
+FROM Statistics
+WHERE Season_ID = 1
+ORDER BY Strike_Rate DESC
+LIMIT 1;
+
+-- GET the teams that have won the IPL seasons with number of seasons won
+SELECT Winning_Team_ID, COUNT(Season_ID) AS Championships_Won
+FROM Season
+WHERE Winning_Team_ID IS NOT NULL
+GROUP BY Winning_Team_ID
+ORDER BY Championships_Won DESC;
+
+-- Get Players who have scored more than 200 runs and taken more than 10 wickets in their career
+SELECT 
+	Player_ID, 
+    CONCAT(First_Name, ' ', Last_Name) AS Player_Name,
+    Total_Runs_Scored, 
+    Total_Wickets_Taken
+FROM Player
+WHERE Total_Runs_Scored > 200 AND Total_Wickets_Taken > 10;
+
+-- Get List the top 3 stadiums with the highest average first innings scores
+SELECT Stadium_Name, City, Average_First_Innings_Score
+FROM Stadium
+ORDER BY Average_First_Innings_Score DESC
+LIMIT 3;
+
+-- Get player that have won max. number of Orange Caps
+SELECT CONCAT(P.First_Name, ' ', P.Last_Name) AS Player_Name, COUNT(Season_ID) AS Orange_Caps_Won
+FROM Season S
+JOIN PLAYER P ON P.Player_ID = S.Orange_Cap_Winner_ID
+GROUP BY Orange_Cap_Winner_ID
+ORDER BY Orange_Caps_Won DESC
+LIMIT 1;
+
+-- Find the coach with the highest number of titles won by their team
+SELECT Coach.Coach_ID, Coach.First_Name, Coach.Last_Name, COUNT(Team.Team_ID) AS Titles_Won
+FROM Coach
+JOIN Team ON Coach.Coach_ID = Team.Coach_ID
+JOIN Season ON Team.Team_ID = Season.Winning_Team_ID
+GROUP BY Coach.Coach_ID
+ORDER BY Titles_Won DESC
+LIMIT 1;
+
+-- Get all players who have played for more than one team
+SELECT 
+	CONCAT(P.First_Name, ' ', P.Last_Name) AS Player_Name, 
+	COUNT(DISTINCT C.Team_ID) AS Total_Teams_Played_For
+FROM Contract C
+JOIN PLAYER P ON P.Player_ID = C.Player_ID
+GROUP BY C.Player_ID
+HAVING Total_Teams_Played_For > 1;
+
+-- Get the List of the players who have never been part of a winning team   
+SELECT P.Player_ID, P.First_Name, P.Last_Name
+FROM Player P
+LEFT JOIN Season S ON P.Current_Team_ID = S.Winning_Team_ID
+WHERE S.Winning_Team_ID IS NULL;
+
+
+
+
 
 
 
