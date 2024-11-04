@@ -188,3 +188,4 @@ CREATE TABLE TeamCaptain (
 	FOREIGN KEY (Team_ID) REFERENCES Team (Team_ID),
 	FOREIGN KEY (Player_ID) REFERENCES Player (Player_ID)
 );
+
