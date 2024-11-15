@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>Edit Player Details</h2>
+
+<form action="{{ url_for('users.edit_player', player_id=player['Player_ID']) }}" method="POST" enctype="multipart/form-data" class="team-form">
+    <div class="form-group">
+        <label for="first_name">First Name</label>
+        <input type="text" name="first_name" id="first_name" value="{{ player['First_Name'] }}" required>
+    </div>
+    <div class="form-group">
+        <label for="last_name">Last Name</label>
+        <input type="text" name="last_name" id="last_name" value="{{ player['Last_Name'] }}" required>
+    </div>
+    <div class="form-group">
+        <label for="nationality">Nationality</label>
+        <input type="text" name="nationality" id="nationality" value="{{ player['Nationality'] }}" required>
+    </div>
+    <div class="form-group">
+        <label for="role">Role</label>
+        <select name="role" id="role" required>
+            <option value="Batsman" {% if player['Role'] == 'Batsman' %}selected{% endif %}>Batsman</option>
+            <option value="Bowler" {% if player['Role'] == 'Bowler' %}selected{% endif %}>Bowler</option>
+            <option value="All-rounder" {% if player['Role'] == 'All-rounder' %}selected{% endif %}>All-rounder</option>
+            <option value="Wicketkeeper" {% if player['Role'] == 'Wicketkeeper' %}selected{% endif %}>Wicketkeeper</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="batting_style">Batting Style</label>
+        <select name="batting_style" id="batting_style" required>
+            <option value="Right_handed" {% if player['Batting_Style'] == 'Right_handed' %}selected{% endif %}>Right-handed</option>
+            <option value="Left_handed" {% if player['Batting_Style'] == 'Left_handed' %}selected{% endif %}>Left-handed</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="bowling_style">Bowling Style</label>
+        <select name="bowling_style" id="bowling_style">
+            <option value="None" {% if player['Bowling_Style'] == 'None' %}selected{% endif %}>None</option>
+            <option value="Right_arm Fast" {% if player['Bowling_Style'] == 'Right_arm Fast' %}selected{% endif %}>Right-arm Fast</option>
+            <option value="Left_arm Fast" {% if player['Bowling_Style'] == 'Left_arm Fast' %}selected{% endif %}>Left-arm Fast</option>
+            <option value="Left_arm Spin" {% if player['Bowling_Style'] == 'Left_arm Spin' %}selected{% endif %}>Left-arm Spin</option>
+            <option value="Right_arm Spin" {% if player['Bowling_Style'] == 'Right_arm Spin' %}selected{% endif %}>Right-arm Spin</option>
+        </select>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Update Player</button>
+</form>
+
+<a class="container mt-3" href="{{ url_for('team_players', team_id=player['Current_Team_ID']) }}">Back to Team Players</a>
+
+{% endblock %}

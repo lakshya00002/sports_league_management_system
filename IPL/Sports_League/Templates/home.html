@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <!-- Moved home section from index.html -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Don’t play for the crowd.</h3>
+            <h1>Play for the country.</h1>
+            <h3><span class="multiple-text">Indian Premiere League</span></h3>
+            <p>"Where Talent Meets Passion, and Legends are Born."</p>
+            <a href="#" class="btn">Book Tickets</a>
+        </div>
+
+        <div class="home-img">
+            <img src="{{ url_for('static', filename='profile_pics/MS_Dhoni.png') }}" alt="Home Image">
+
+        </div>
+    </section>
+{% endblock %}

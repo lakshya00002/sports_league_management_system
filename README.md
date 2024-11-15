@@ -3,6 +3,7 @@
 1. Design and implement an ER Diagram of `SportsLeague`.
 2. This ER Diagram especially shows the database management system of `IndianPremierLeague`.
 3. The database will handle the relationships and entities that are involved in managing a professional sports league like IPL.
+4. Create a web application with backend and frontend logic and add services and functionalities accordingly.
 
 ### Solution Constituents
 Solution includes
@@ -13,6 +14,7 @@ Solution includes
 5. Normalization
 6. Databasec Queries
 7. Implementation
+8. All the functionalities and services of web application should be working efficiently. 
 
 ## Team Name
 Mavericks

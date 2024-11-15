@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="content-wrapper stadiumfix">
+<h1>Stadiums</h1>
+    <table border="1">
+        <tr>
+            <th>Stadium Name</th>
+            <th>City</th>
+            <th>Capacity</th>
+            <th>Pitch Type</th>
+            <th>Average_First_Innings_Score</th>
+            <th>Total_Matches_Hosted</th>
+        </tr>
+        {% for stadium in stadiums %}
+            <tr>
+                <td>{{ stadium[1] }}</td>
+                <td>{{ stadium[2] }}</td>
+                <td>{{ stadium[4] }}</td>
+                <td>{{ stadium[5] }}</td>
+                <td>{{ stadium[6] }}</td>
+                <td>{{ stadium[7] }}</td>
+        </tr>
+        {% endfor %}
+</table>
+
+</div>
+{% endblock content %} 

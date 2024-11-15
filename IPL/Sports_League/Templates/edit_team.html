@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Edit Team</h1>
+
+<form action="{{ url_for('users.edit_team', team_id=team['Team_ID']) }}" method="POST" enctype="multipart/form-data" class="team-form">
+    <div class="form-group">
+        <label for="team_name">Team Name</label>
+        <input type="text" class="form-control" id="team_name" name="team_name" value="{{ team['Team_Name'] }}" required>
+    </div>
+    <div class="form-group">
+        <label for="city">City</label>
+        <input type="text" class="form-control" id="city" name="city" value="{{ team['City'] }}" required>
+    </div>
+    <div class="form-group">
+        <label for="founding_year">Founding Year</label>
+        <input type="date" class="form-control" id="founding_year" name="founding_year" value="{{ team['Founding_Year'] }}" required>
+    </div>
+    <div class="form-group">
+        <label for="stadium_id">Stadium</label>
+        <select class="form-control" id="stadium_id" name="stadium_id" required>
+            {% for stadium in stadiums %}
+                <option value="{{ stadium[0] }}">{{ stadium[1] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="team_logo">Team Logo</label>
+        <input type="file" class="form-control" id="team_logo" name="team_logo" required>
+    </div>
+    <div class="form-group">
+        <label for="dress_colour">Dress Colour</label>
+        <input type="text" class="form-control" id="dress_colour" name="dress_colour" value="{{ team['Dress_Colour'] }}" required>
+    </div>
+    <div class="form-group">
+        <label for="team_link">Team Link</label>
+        <input type="url" class="form-control" id="team_link" name="team_link" value="{{ team['Team_Link'] }}">
+    </div>
+    <button type="submit" class="btn btn-primary">Update Team</button>
+</form>
+
+{% endblock %}

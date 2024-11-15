@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="content-wrapper">
+        <table  table class="table table-striped list-table">
+        <h1>View Players</h1>
+
+        <ul id="player-list">
+            {% for player in players %}
+                <li>
+                    <a href="{{ url_for('users.edit_player', player_id=player.Player_ID) }}">
+                        {{ player.Player_Name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+        </table>
+    </div>
+{% endblock %}
+
