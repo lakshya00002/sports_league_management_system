@@ -1,0 +1,40 @@
+<!-- seasons.html -->
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="content-wrapper stadiumfix">
+    <h1>Seasons</h1>
+    <table border="1">
+        <tr>
+            <th>Season ID</th>
+            <th>Year</th>
+            <th>Total Matches Played</th>
+            <th>Winning Team</th>
+            <th>Runner-Up Team</th>
+            <th>Orange Cap Winner</th>
+            <th>Purple Cap Winner</th>
+        </tr>
+        {% for season in seasons %}
+            <tr>
+                <td>{{ season.Season_ID }}</td>
+                <td>{{ season.Year }}</td>
+                <td>{{ season.Total_Matches_Played }}</td>
+                <td>{{ season.Winning_Team or "N/A" }}</td>
+                <td>{{ season.Runner_Team or "N/A" }}</td>
+                <td>
+                    {{ season.Orange_Cap_Winner_First_Name }} 
+                    {{ season.Orange_Cap_Winner_Last_Name or "N/A" }}
+                </td>
+                <td>
+                    {{ season.Purple_Cap_Winner_First_Name }} 
+                    {{ season.Purple_Cap_Winner_Last_Name or "N/A" }}
+                </td>
+            </tr>
+        {% else %}
+        <tr>
+            <td colspan="7">No seasons available.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock content %}

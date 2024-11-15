@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="content-wrapper">
+    <h2 class="text-center">Players</h2>
+    <table class="table table-bordered table-hover mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>Player Name</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in players %}
+            <tr>
+                <td><a href="{{ url_for('player_details', player_id=player[0]) }}" class="player-link">{{ player[1] }}</a></td>
+                <td>{{ player[2] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

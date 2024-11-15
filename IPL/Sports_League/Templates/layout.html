@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- My imports -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+
+    {% if title %}
+        <title>IPL - {{ title }}</title>
+    {% else %}
+        <title>IPL</title>
+    {% endif %}
+</head>
+<body class="{% if title == 'Home' %}main-page{% endif %}">
+    <!-- Moved header section from index.html -->
+    <header>
+        <a href="#" class="logo">Sports <span>League</span></a>
+        <div class='bx bx-menu' id="menu-icon"></div>
+        <div class="menu-container">
+            <ul class="navbar">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('seasons') }}">Seasons</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('team') }}">Teams</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('stadium') }}">Stadiums</a>
+                </li>
+            </ul>
+            
+            
+            <li class="navbar-nav">
+                {% if current_user.is_authenticated %}
+                <ul class="navbar">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('users.account') }}">Account</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('users.add_team') }}">Add Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('users.view_team') }}">Edit Team Details</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('users.view_player')}}">Edit Player Details</a>
+                    </li>
+                </ul>
+                    <li class="nav-item">
+                        <a class="nav-btn" href="{{ url_for('users.logout') }}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-btn" href="{{ url_for('users.login') }}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-btn" href="{{ url_for('users.register') }}">Register</a>
+                    </li>
+                {% endif %}
+            </li>
+        </div>
+    </header>
+
+    <div class="content-section mt-5">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <footer class="footer">
+        <div class="social">
+            <a href="https://www.facebook.com/IPL"><i class='bx bxl-facebook' ></i></a>
+            <a href="https://www.instagram.com/iplt20/?hl=en"><i class='bx bxl-instagram' ></i></a>
+            <a href="https://x.com/IPL"><i class='bx bx-x'></i></a>
+        </div>
+
+        <p class="copyright">
+            &copy; Mavericks - All Rights Reserved
+        </p>
+    </footer>
+
+    <!-- Optional JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

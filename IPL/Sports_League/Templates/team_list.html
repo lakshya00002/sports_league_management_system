@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Teams</h1>
+    <table class="table table-striped list-table">
+        <thead>
+            <tr>
+                <th>Team Name</th>
+                <th>City</th>
+                <th>Founded</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for team in teams %}
+            <tr>
+                <td>{{ team.Team_Name }}</td>
+                <td>{{ team.City }}</td>
+                <td>{{ team.Team_Founding_Year.strftime('%Y') }}</td>
+                <td>
+                    <a href="{{ url_for('users.edit_team', team_id=team.Team_ID) }}" class="btn btn-primary btn-sm">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

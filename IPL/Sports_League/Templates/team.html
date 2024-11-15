@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="content-wrapper">
+    <h1>Teams</h1>
+    <ul>
+        {% for team in teams %}
+            <li>
+                <a href="{{ url_for('team_players', team_id=team[0]) }}">{{ team[1] }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <table class="table table-bordered team-table">
+        <thead>
+            <tr>
+                <th>Team Name</th>
+                <th>City</th>
+                <th>Logo</th>
+                <th>Dress Colour</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for team in teams %}
+                <tr>
+                    <td>{{ team[1] }}</td>
+                    <td>{{ team[2] }}</td>
+                    <td><img class="img-thumbnail account-img" src="{{ team[-1] }}" alt="Team Logo"></td> <!-- Using team[-1] for logo URL -->
+                    <td>{{ team[6] }}</td>
+                    <td><a href="{{ team[7] }}">{{ team[7] }}</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

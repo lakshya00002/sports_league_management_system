@@ -1,0 +1,584 @@
+/* Global Reset and Body Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  border: none;
+  outline: none;
+  scroll-behavior: smooth;
+  font-family: -apple-system, sans-serif;
+}
+
+.main-page {
+  background: url('../profile_pics/images.jpeg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+:root {
+  --bg-color: #000;
+  --snd-bg-color: #111;
+  --text-color: #fff;
+  --main-color: #45ffca;
+}
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+  padding-top: 80px;
+}
+
+/* Section Styles */
+section {
+  min-height: 100vh;
+  padding: 100rem 8% 2rem;
+}
+
+/* Header Styles */
+header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 9%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  transition: all 0.5s ease;
+  flex-wrap: nowrap;
+  left: 0;
+}
+
+.menu-container {
+  display: flex;
+  align-items: center;
+  gap: 2rem; /* Add spacing between navbar and buttons */
+  justify-content: flex-end;
+
+}
+
+#menu-icon {
+  font-size: 3.6rem;
+  color: var(--main-color);
+  cursor: pointer;
+  display: none;
+}
+
+
+/* Home Section Styles */
+.home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 10rem 8% 2rem; /* Adjust top padding to align with header */
+  margin-top: 8rem; /* Offset to prevent overlap with fixed header */
+}
+
+.home-content {
+  margin-top: 2rem; /* Reduce if needed to bring the content closer */
+}
+
+.home-content h3 {
+  font-size: 5rem;
+  font-weight: 700;
+}
+
+.home-content span {
+  font-size: 4rem;
+  font-weight: 550;
+}
+
+.home-content h1 {
+  font-size: 5.6rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.home-img img {
+  width: 45vw;
+}
+
+.home-img::before {
+  content: 'MAVERICKS';
+  position: absolute;
+  top: 10%;
+  left: 46%;
+  transform: translateX(-50%);
+  font-size: 20rem;
+  font-weight: 400;
+  line-height: 20rem;
+  color: var(--text-color);
+  opacity: 0.1;
+  z-index: -1;
+}
+
+.home-content p {
+  font-size: 1.6rem;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+}
+
+/* Button Styles */
+.btn {
+  display: inline-block;
+  padding: 1rem;
+  background: var(--main-color);
+  border-radius: 1rem;
+  box-shadow: none;
+  font-size: 1.6rem;
+  color: var(--bg-color);
+  letter-spacing: 0.1rem;
+  font-weight: 600;
+  transition: 0.5s ease;
+}
+
+.btn:hover {
+  background: var(--main-color);
+  color: var(--text-color);
+  box-shadow: 0 0 10px var(--main-color);
+}
+
+/* Navbar Styles */
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 2rem; /* Adds space between links */
+  flex-wrap: nowrap; /* Prevents line breaks */
+}
+
+.navbar a {
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: var(--text-color);
+  margin-left: 1rem;
+  transition: all 0.5s ease;
+  border-bottom: 3px solid transparent;
+}
+
+.navbar a:hover,
+.navbar a.active {
+  color: var(--main-color);
+  border-bottom: 3px solid var(--main-color);
+}
+
+/* Navigation Button Styles */
+.nav-btn {
+  display: inline-block;
+  padding: 1rem 2.8rem;
+  background: transparent;
+  color: var(--main-color);
+  border: 2px solid var(--main-color);
+  border-radius: 1rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  transition: all 0.5s ease;
+  margin: 0;
+}
+
+.nav-btn:hover {
+  background: var(--main-color);
+  color: var(--text-color);
+  box-shadow: 0 0 18px var(--main-color);
+}
+
+/* Footer Styles */
+.footer {
+  font-size: 0.9rem;
+  border-top: 1px solid #444;
+}
+
+.logo {
+  font-size: 3rem;
+  color: var(--text-color);
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  text-decoration: none;
+}
+
+.logo:hover {
+  transform: scale(1.1);
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+
+
+span {
+  color: var(--main-color);
+}
+
+
+
+.auth-buttons a {
+  white-space: nowrap;
+  margin: 0 0.5rem; /* Adjust spacing as needed */
+}
+
+
+
+
+
+
+
+/*Table*/
+.content-wrapper {
+  margin-top: 100px; /* Adjust this value based on your navbar height */
+  padding: 20px; /* Optional for better spacing */
+  font-size: 2rem; /* Increase the font size for the team name links */
+  font-weight: bold;
+  color: #111111;
+  margin-left: 0.5rem;
+}
+.team-table th, .team-table td {
+  color: #050505; /* Change this to your desired color */
+  font-size: 16px; /* Increase or decrease as needed */
+  padding: 10px; /* Optional: Add padding for better spacing */
+  
+}
+
+.team-table th {
+  background-color: #f2f2f2; /* Optional: Change the header background color */
+  font-weight: bold; /* Make the header text bold */
+  font-size: 1.8rem; 
+}
+
+.team-table td a {
+  color: #1260a4; /* Change link color if needed */
+  text-decoration: none; /* Remove underline from links */
+  
+}
+
+.team-table td img {
+  max-width: 80px; /* Ensure the image doesn't exceed a certain size */
+  height: auto;
+}
+.team-table tr:nth-child(even) {
+  background-color: #f2f2f2; /* Light gray for even rows */
+}
+
+.team-table tr:nth-child(odd) {
+  background-color: #ffffff; /* White for odd rows */
+}
+
+.team-table td a {
+  font-weight: bold;
+}
+
+.team-table{
+  margin-top: 4rem;
+}
+/*list Table*/
+.content-wrapper {
+  margin-top: 100px; /* Adjust this value based on your navbar height */
+  padding: 20px; /* Optional for better spacing */
+  font-size: 2rem; /* Increase the font size for the team name links */
+  font-weight: bold;
+  color: #111111;
+  margin-left: 0.5rem;
+}
+.list-table th, .list-table td {
+  color: #8d6868; /* Change this to your desired color */
+  font-size: 16px; /* Increase or decrease as needed */
+  padding: 10px; /* Optional: Add padding for better spacing */
+  
+}
+
+.list-table th {
+  background-color: #f2f2f2; /* Optional: Change the header background color */
+  font-weight: bold; /* Make the header text bold */
+  font-size: 1.8rem; 
+}
+
+.list-table td a {
+  color: #1260a4; /* Change link color if needed */
+  text-decoration: none; /* Remove underline from links */
+  
+}
+
+.list-table td img {
+  max-width: 80px; /* Ensure the image doesn't exceed a certain size */
+  height: auto;
+}
+.list-table tr:nth-child(even) {
+  background-color: #f2f2f2; /* Light gray for even rows */
+}
+
+.list-table tr:nth-child(odd) {
+  background-color: #ffffff; /* White for odd rows */
+}
+
+.list-table td a {
+  font-weight: bold;
+}
+
+.list-table{
+  margin-top: 4rem;
+}
+
+
+
+
+.stadiumfix table {
+  border-collapse: collapse;
+  width: 100%; /* Full width for better visual layout */
+  background-color: #000; /* Dark background color */
+  color: #fff; /* Light text color */
+  border: 2px solid #555; /* Dark gray border for contrast */
+}
+
+.stadiumfix h1{
+  font-size: 4rem;
+  font-weight: bold;
+  color: #000;
+  margin-left: 1.2rem;
+  margin-bottom: 3rem;
+}
+
+.stadiumfix th {
+  border: 1px solid #ccc; /* Light gray border for header */
+
+  padding: 10px; /* Adds spacing inside header cells */
+}
+
+.stadiumfix td {
+  border: 1px solid #ccc; /* Consistent border color */
+  padding: 8px; /* Increased padding for better readability */
+}
+
+
+
+/* form */
+.content-section{
+  margin-top: 15rem;
+}
+
+/* Increase the text size for form elements */
+.form-group {
+  font-size: 1.8rem; /* Adjust this value for larger or smaller text */
+}
+
+.form-control-label {
+  font-size: 2.5rem; /* Adjust label size */
+}
+
+.form-control {
+  font-size: 1.6rem; /* Adjust input field text size */
+  padding: 1rem; /* Optionally adjust padding for a better appearance */
+}
+
+.is-invalid {
+  font-size: 1.6rem; /* Ensures error text is also the same size */
+}
+
+.invalid-feedback span {
+  font-size: 1.4rem; /* Adjust the error message size */
+}
+
+.form-check-label {
+  font-size: 1.6rem; /* Adjust the checkbox label text size */
+}
+
+.btn {
+  font-size: 1.6rem; /* Adjust the button text size */
+}
+
+
+/* Increase the font size of the form legend (Admin Registration) */
+legend {
+  font-size: 2.8rem; /* Adjust this value for a larger or smaller size */
+}
+
+/* Increase the font size of the 'Already an Admin?' link */
+.small.text-muted {
+  font-size: 1.8rem; 
+}
+
+.text-muted a {
+  font-size: 1.8rem; 
+}
+
+.text-muted {
+  font-size: 2.5rem;
+}
+
+
+
+/* Footer part */
+.footer {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  padding: 40px 0;
+  background: var(--snd-bg-color);
+}
+
+.footer .social {
+  text-align: center;
+  padding-bottom: 20px;
+  color: var(--main-color);
+}
+
+.footer .social a{
+  font-size: 25px;
+  color: var(--main-color);
+  width: 42px;
+  height: 42px;
+  line-height: 42px;
+  display: inline-block;
+  text-align: center;
+  border-radius: 50%;
+  margin: 0 10px;
+  border: 2px solid var(--main-color);
+  transition: 0.5s ease-in-out;
+} 
+
+.footer .social a:hover {
+  transform: scale(1.2) translateY(-10px);
+  background: var(--main-color);
+  color: #131313;
+  box-shadow: 0 0 25px var(--main-color);
+}
+
+.footer .copyright {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 16px;
+  color: var(--text-color);
+}
+
+.content-wrapper {
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+h2 {
+  color: #343a40;
+}
+
+.table-bordered {
+  background-color: #ffffff;
+}
+
+.player-link {
+  color: black !important;
+  text-decoration: none;
+}
+
+.player-link:hover {
+  text-decoration: underline;
+}
+
+.table thead {
+  color: #ffffff;
+  background-color: #343a40;
+}
+
+/* General styling for both Add and Edit Team forms */
+.team-form {
+  background-color: #222;
+  color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.team-form h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: var(--main-color);
+}
+
+.team-form .form-group label {
+  font-size: 1.6rem;
+  color: #ddd;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.team-form .form-control {
+  font-size: 1.4rem;
+  padding: 12px;
+  background-color: #333;
+  color: #f3eeee;
+  border: 1px solid #555;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.team-form .form-control::placeholder {
+  color: #efebeb;
+}
+
+.team-form .form-control:focus {
+  border-color: var(--main-color);
+  box-shadow: 0 0 5px var(--main-color);
+}
+
+/* Dropdown Styling */
+.team-form select.form-control {
+  font-size: 1.4rem;
+  color: #eeeaea; /* Selected item text color */
+  background-color: #333; /* Dropdown background color */
+  border: 1px solid #555;
+  padding: 1px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.team-form select.form-control option {
+  color: #333;
+  background-color: #f9f9f9;
+}
+
+/* Remove padding for file input for better alignment */
+.team-form input[type="file"] {
+  font-size: 1.2rem;
+  color: #ddd;
+  background-color: #444;
+  border: 1px solid #555;
+  padding: 8px;
+}
+
+/* Button Styling */
+.team-form .btn-primary {
+  background-color: var(--main-color);
+  border: none;
+  font-size: 1.6rem;
+  padding: 10px 20px;
+  margin-top: 15px;
+  color: var(--bg-color);
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.team-form .btn-primary:hover {
+  background-color: #33d6a6;
+  color: #060606;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+      flex-direction: column;
+      gap: 1rem;
+  }
+  .footer .social a {
+      font-size: 20px;
+      width: 35px;
+      height: 35px;
+  }
+}
+
+
